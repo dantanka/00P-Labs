@@ -8,22 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace zalevskaolya_lab2
+namespace komendant_lab2
 {
     public partial class Form1 : Form
     {
-        private bool pr; // Логічна змінна для контролю циклу
+        private bool pr; 
 
         public Form1()
         {
             InitializeComponent();
-            pr = false; // Початкове значення
+            pr = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            pr = false; // Скидання змінної pr для повторного запуску
-            StartCalculations(); // Запуск обчислень
+            pr = false; 
+            StartCalculations(); 
         }
 
         private void StartCalculations()
@@ -31,12 +31,11 @@ namespace zalevskaolya_lab2
             double argx = 1;
             double argy = 1;
 
-            // Нескінченний цикл
             while (true)
             {
                 if (pr)
                 {
-                    return; // Вихід з циклу, якщо pr = true
+                    return; 
                 }
 
                 argx++;
@@ -50,12 +49,10 @@ namespace zalevskaolya_lab2
                     argy = 1;
                 }
 
-                // Обчислення функцій
-                double fx = 2 * Math.Pow((argx - 4), 2) + 4 * (argx - 4) * Math.Sin(argx - 4) + 2 * Math.Pow((Math.Sin(argx - 4)), 2) + 7 * Math.Pow((argy - 7), 2);
-                double fy = 2 * Math.Pow((argx - 4), 2) + 4 * (argx - 4) * Math.Sin(argx - 4) + 2 * Math.Pow((Math.Sin(argx - 4)), 2);
-                double z = 7 * Math.Pow((argy - 7), 2); // Обчислення Z
+                double fx = 1 * Math.Pow((argx - 1), 2) + 1 * (argx - 1) * Math.Sin(argx - 1) + 2 * Math.Pow((Math.Sin(argx - 1)), 2) + 7 * Math.Pow((argy - 0), 2);
+                double fy = 1 * Math.Pow((argx - 1), 2) + 1 * (argx - 1) * Math.Sin(argx - 1) + 2 * Math.Pow((Math.Sin(argx - 1)), 2);
+                double z = 7 * Math.Pow((argy - 0), 2); 
 
-                // Оновлення текстових полів на основі вибраних checkBox
                 if (checkBox1.Checked)
                 {
                     textBox1.Text = fx.ToString();
@@ -69,13 +66,13 @@ namespace zalevskaolya_lab2
                     textBox3.Text = z.ToString();
                 }
 
-                Application.DoEvents(); // Дозволяє оновлення інтерфейсу
+                Application.DoEvents(); 
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            pr = true; // Встановлює pr в true для зупинки циклу
+            pr = true; 
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
