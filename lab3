@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace lab3
+namespace chatgpt3
 {
     public partial class Form1 : Form
     {
@@ -12,84 +12,59 @@ namespace lab3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MyClass class1 = new MyClass();
+            // Перевірка коректності введених даних
+            if (!double.TryParse(textBox1.Text, out double xValue) ||
+                !double.TryParse(textBox2.Text, out double yValue))
+            {
+                MessageBox.Show("Будь ласка, введіть коректні числові значення!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            // Зчитування значень з текстових полів
-            double xValue = Convert.ToDouble(textBox1.Text);
-            double yValue = Convert.ToDouble(textBox2.Text);
+            // Створення об'єкта класу
+            MyClass class1 = new MyClass(xValue, yValue);
 
-            // Присвоєння значень полям екземпляра
-            class1.x = xValue;
-            class1.y = yValue;
+            // Обчислення та вивід результатів
+            textBox3.Text = class1.f().ToString();
+            textBox4.Text = class1.f(xValue, yValue).ToString();
+            textBox5.Text = MyClass.fs(xValue, yValue).ToString();
+        }
+    }
 
-            // Обчислення результату для екземпляра
-            double result = class1.f();
-            textBox3.Text = result.ToString(); // Виведення результату в textBox3
+    public class MyClass
+    {
+        public double x { get; set; }
+        public double y { get; set; }
 
-            double resultWithParams = class1.f(xValue, yValue);
-            textBox4.Text = resultWithParams.ToString(); // Виведення результату в textBox4
+        // Конструктори
+        public MyClass() { }
 
-            // Присвоєння значень статичним полям
-            MyClass.xs = xValue;
-            MyClass.ys = yValue;
-
-            // Обчислення результатів для статичних полів
-            double resultStatic = MyClass.fs();
-            textBox5.Text = resultStatic.ToString(); // Виведення результату в textBox5
-
-            double resultStaticWithParams = MyClass.fs(xValue, yValue);
-            textBox6.Text = resultStaticWithParams.ToString(); // Виведення результату в textBox6
-
-
+        public MyClass(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
         }
 
-        public class MyClass
+        // Приватний метод для обчислення функції
+        private static double CalculateFunction(double x, double y)
         {
-            // Публічні властивості x і y
-            public double x { get; set; }
-            public double y { get; set; }
+            return Math.Pow(x - 1, 2) + (x - 1) * Math.Sin(x - 1) +
+                   Math.Pow(Math.Sin(x - 1), 2) + 3 * Math.Pow(y, 2);
+        }
 
-            // Статичні поля xs і ys
-            public static double xs = 10;
-            public static double ys = 10;
+        // Методи обчислення
+        public double f()
+        {
+            return CalculateFunction(x, y);
+        }
 
-            // Конструктор за замовчуванням
-            public MyClass() { }
+        public double f(double x, double y)
+        {
+            return CalculateFunction(x, y);
+        }
 
-            // Перевантажений конструктор
-            public MyClass(double x, double y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-
-            // Метод для обчислень з використанням екземплярних полів
-            public virtual double f()
-            {
-                return 1 * Math.Pow(x - 1, 2) + 1 * (x - 1) * Math.Sin(x - 1) +
-                       1 * Math.Pow(Math.Sin(x - 1), 2) + 3 * Math.Pow(y - 0, 2);
-            }
-
-            // Статичний метод для обчислень з використанням статичних полів
-            public static double fs()
-            {
-                return 1 * Math.Pow(xs - 1, 2) + 1 * (xs - 1) * Math.Sin(xs - 1) +
-                       1 * Math.Pow(Math.Sin(xs - 1), 2) + 3 * Math.Pow(ys - 0, 2);
-            }
-
-            // Метод для обчислень з параметрами
-            public virtual double f(double x, double y)
-            {
-                return 1 * Math.Pow(x - 1, 2) + 1 * (x - 1) * Math.Sin(x - 1) +
-                       1 * Math.Pow(Math.Sin(x - 1), 2) + 3 * Math.Pow(y - 0, 2);
-            }
-
-            // Статичний метод для обчислень з параметрами
-            public static double fs(double xs, double ys)
-            {
-                return 1 * Math.Pow(xs - 1, 2) + 1 * (xs - 1) * Math.Sin(xs - 1) +
-                       1 * Math.Pow(Math.Sin(xs - 1), 2) + 3 * Math.Pow(ys - 0, 2);
-            }
+        public static double fs(double xs, double ys)
+        {
+            return CalculateFunction(xs, ys);
         }
     }
 }
